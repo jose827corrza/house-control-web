@@ -1,4 +1,4 @@
-import type { HouseInfo, RawActuatorResponse, RawHouseInfo } from '../types/api';
+import type { Actuator, HouseInfo, RawActuatorResponse, RawHouseInfo } from '../types/api';
 import { apiClient } from './client'
 
 export const houseService = {
@@ -14,6 +14,14 @@ export const houseService = {
                 "actuator_state": newState
         })
         return response.data;
+    },
+
+    async addActuator(houseId: string, actuatorName: string): Promise<RawActuatorResponse> {
+        const response = await apiClient.post('/create-actuator', {
+            "house_id": houseId,
+            "actuator_name": actuatorName
+        });
+        return response.data;
     }
 }
 
@@ -28,4 +36,13 @@ export function normalizeHouses(rawHouses: RawHouseInfo[]): HouseInfo[] {
         }))
     }));
     return houses;
+}
+
+export function normalizeActuator(rawActuator: RawActuatorResponse): Actuator[] {
+    const actuators = Object.entries(rawActuator).map(([id, actuator]) => ({
+        id,
+        name: actuator.name,
+        isActive: actuator.is_active
+    }));
+    return actuators;
 }

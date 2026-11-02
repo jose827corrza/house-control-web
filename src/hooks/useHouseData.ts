@@ -7,10 +7,14 @@ export function useHouseData() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchStatus = useCallback(async () => {
+    const fetchStatus = useCallback(async (showLoading = true) => {
+        console.log("🔄 Fetching houses data... Triggered by refetch?");
         try {
-            setLoading(true);
+            if (showLoading) {
+                setLoading(true);
+            }
             const response = await houseService.getHouses();
+            console.log("📥 Raw response received:", response);
             const normalizedData = normalizeHouses(response);
             setData(normalizedData);
             setError(null);
@@ -26,5 +30,5 @@ export function useHouseData() {
         fetchStatus();
     }, [fetchStatus]);
 
-    return { data, loading, error, refetch: fetchStatus };
+    return { data, loading, error, refetch: () =>  fetchStatus(false) };
 }

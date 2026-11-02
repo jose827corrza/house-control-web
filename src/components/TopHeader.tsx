@@ -2,7 +2,7 @@ import React from 'react';
 import type { AuthUser } from 'aws-amplify/auth'; // Standard AWS Amplify v6 auth user type
 
 interface TopHeaderProps {
-  user: AuthUser | null;
+  user: AuthUser | undefined;
   signOut: () => void;
 }
 
