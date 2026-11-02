@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HouseCard } from './HouseCard';
 import type { HouseInfo } from '../types/api';
+import { houseService } from '../api/houseService';
 
 interface HouseListProps {
   housesArray: HouseInfo[];
@@ -9,8 +10,9 @@ interface HouseListProps {
 export const HouseList: React.FC<HouseListProps> = ({ housesArray }) => {
   const [houses, setHouses] = useState<HouseInfo[]>(housesArray);
 
-  const handleToggleActuator = (houseId: string, actuatorId: string, status: boolean) => {
-    console.log(`Toggling actuator ${actuatorId} for house ${houseId} to ${status ? 'OFF' : 'ON'}`);
+  const handleToggleActuator = async (houseId: string, actuatorId: string, currentStatus: boolean) => {
+    console.log(`Toggling actuator ${actuatorId} for house ${houseId} to ${currentStatus ? 'OFF' : 'ON'}`);
+    const nextStatus = !currentStatus;
     setHouses((prevHouses) =>
       prevHouses.map((house) => {
         if (house.id !== houseId) return house;
@@ -18,11 +20,30 @@ export const HouseList: React.FC<HouseListProps> = ({ housesArray }) => {
         return {
           ...house,
           actuators: house.actuators.map((actuator) =>
-            actuator.id === actuatorId ? { ...actuator, isActive: !actuator.isActive } : actuator
+            actuator.id === actuatorId ? { ...actuator, isActive: nextStatus } : actuator
           ),
         };
       })
     );
+
+    try {
+      await houseService.updateActuatorState(houseId, actuatorId, !currentStatus);
+    } catch (error) {
+      console.error("Failed to update actuator:", error);
+
+      setHouses((prevHouses) =>
+        prevHouses.map((house) => {
+          if (house.id !== houseId) return house;
+
+          return {
+            ...house,
+            actuators: house.actuators.map((actuator) =>
+              actuator.id === actuatorId ? { ...actuator, isActive: currentStatus } : actuator
+            ),
+          };
+        })
+      );
+    }
   };
 
   return (

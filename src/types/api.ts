@@ -4,6 +4,8 @@ export interface RawHouseInfo {
     actuators: Record<string, RawActuator>;
 }
 
+export type RawActuatorResponse = RawHouseInfo['actuators'];
+
 export interface RawActuator {
     is_active: boolean;
     name: string;

@@ -18,7 +18,7 @@ apiClient.interceptors.request.use(async (config) => {
     return config;
 }, (error) => Promise.reject(error));
 
- async function getAccessToken(): Promise<string | undefined> {
+async function getAccessToken(): Promise<string | undefined> {
     // Implementation for getting access token
     try {
         const session = await fetchAuthSession();
