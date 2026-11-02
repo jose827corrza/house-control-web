@@ -1,16 +1,24 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { BrowserRouter, Route, Routes } from 'react-router';
 import HousesScreen from './components/HousesScreen'
+import '@aws-amplify/ui-react/styles.css';
+import { AppLayout } from './layout/AppLayout';
+import type { AuthUser } from 'aws-amplify/auth';
 
-function App() {
+interface AppProps {
+  user: AuthUser | null;
+  signOut: () => void;
+}
+
+function App({ user, signOut }: AppProps) {
 
   return (
-    <>
-    <h1 className="text-4xl font-bold mb-4 text-white">House Control Dashboard</h1>
-      <HousesScreen />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<AppLayout user={user} signOut={signOut} />}>
+          <Route path="/" element={<HousesScreen />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
