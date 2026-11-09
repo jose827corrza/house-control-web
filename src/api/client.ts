@@ -2,7 +2,7 @@ import { fetchAuthSession } from 'aws-amplify/auth';
 import axios from 'axios';
 
 export const apiClient = axios.create({
-    baseURL: import.meta.env.DEV ? '/api' : 'https://test-api.us-east-1.amazonaws.com',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ apiClient.interceptors.request.use(async (config) => {
     return config;
 }, (error) => Promise.reject(error));
 
- async function getAccessToken(): Promise<string | undefined> {
+async function getAccessToken(): Promise<string | undefined> {
     // Implementation for getting access token
     try {
         const session = await fetchAuthSession();

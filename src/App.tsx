@@ -5,8 +5,8 @@ import { AppLayout } from './layout/AppLayout';
 import type { AuthUser } from 'aws-amplify/auth';
 
 interface AppProps {
-  user: AuthUser | null;
-  signOut: () => void;
+  user: AuthUser | undefined;
+  signOut: (data?: any) => void;
 }
 
 function App({ user, signOut }: AppProps) {
