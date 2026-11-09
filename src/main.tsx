@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Authenticator>
           {({ signOut, user }) => (
-            <App user={user} signOut={signOut} />
+            <App user={user} signOut={signOut ?? (() => {})} />
           )}
         </Authenticator>
   </StrictMode>,

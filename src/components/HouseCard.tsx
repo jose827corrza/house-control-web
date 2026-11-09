@@ -12,9 +12,9 @@ export const HouseCard: React.FC<HouseCardProps> = ({ house, onToggleActuator, r
   const [expanded, setExpanded] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newActuatorName, setNewActuatorName] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
 
-  const { createActuator, isUpdating, mutationError } = useCreateActuator(refetchHouses);
+  const { createActuator } = useCreateActuator(refetchHouses);
 
 const handleCreateActuator = async (e: React.FormEvent) => {
     e.preventDefault();
