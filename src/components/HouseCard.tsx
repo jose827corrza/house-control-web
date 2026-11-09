@@ -34,20 +34,20 @@ const handleCreateActuator = async (e: React.FormEvent) => {
   return (
     <div className="border border-gray-700 rounded-lg p-4 mb-4 bg-gray-900 text-white shadow-md relative">
       {/* House Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
         <div
           className="cursor-pointer select-none flex-1"
           onClick={() => setExpanded(!expanded)}
         >
           <h2 className="text-lg font-bold">{house.name}</h2>
-          <p className="text-xs text-gray-500 font-mono">{house.id}</p>
+          <p className="text-xs font-mono text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-900/50 px-2 py-0.5 rounded-md inline-block">{house.id}</p>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center gap-2 self-start sm:self-auto">
           {/* Add Actuator Button */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-600 hover:bg-blue-500 text-white px-1.5 py-1 rounded text-xs font-semibold transition-colors"
+            className="inline-flex items-center justify-center text-xs font-medium px-3 py-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-700 hover:bg-indigo-600 transition-colors"
           >
             + Add Actuator
           </button>
