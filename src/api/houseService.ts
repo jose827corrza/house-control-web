@@ -22,6 +22,13 @@ export const houseService = {
             "actuator_name": actuatorName
         });
         return response.data;
+    },
+
+    async createHouse(houseName: string): Promise<RawHouseInfo> {
+        const response = await apiClient.post('/create-house', {
+            "house_name": houseName
+        });
+        return response.data;
     }
 }
 
